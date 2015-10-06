@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		D80F4FBF1BC4191B00EAA4EC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FBE1BC4191B00EAA4EC /* main.cpp */; };
+		D80F4FC71BC4195600EAA4EC /* Architect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FC51BC4195600EAA4EC /* Architect.cpp */; settings = {ASSET_TAGS = (); }; };
+		D80F4FCA1BC4196200EAA4EC /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FC81BC4196200EAA4EC /* Particle.cpp */; settings = {ASSET_TAGS = (); }; };
+		D80F4FCD1BC4198200EAA4EC /* Visualization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FCB1BC4198200EAA4EC /* Visualization.cpp */; settings = {ASSET_TAGS = (); }; };
+		D80F4FD01BC419BD00EAA4EC /* Domain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FCE1BC419BD00EAA4EC /* Domain.cpp */; settings = {ASSET_TAGS = (); }; };
+		D80F4FD31BC419C600EAA4EC /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FD11BC419C600EAA4EC /* Storage.cpp */; settings = {ASSET_TAGS = (); }; };
+		D80F4FD51BC41B9700EAA4EC /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D80F4FD41BC41B9700EAA4EC /* GLUT.framework */; };
+		D80F4FD71BC41B9E00EAA4EC /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D80F4FD61BC41B9E00EAA4EC /* OpenGL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +32,18 @@
 /* Begin PBXFileReference section */
 		D80F4FBB1BC4191B00EAA4EC /* ParticleMotion */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ParticleMotion; sourceTree = BUILT_PRODUCTS_DIR; };
 		D80F4FBE1BC4191B00EAA4EC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D80F4FC51BC4195600EAA4EC /* Architect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Architect.cpp; sourceTree = "<group>"; };
+		D80F4FC61BC4195600EAA4EC /* Architect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Architect.hpp; sourceTree = "<group>"; };
+		D80F4FC81BC4196200EAA4EC /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
+		D80F4FC91BC4196200EAA4EC /* Particle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Particle.hpp; sourceTree = "<group>"; };
+		D80F4FCB1BC4198200EAA4EC /* Visualization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visualization.cpp; sourceTree = "<group>"; };
+		D80F4FCC1BC4198200EAA4EC /* Visualization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Visualization.hpp; sourceTree = "<group>"; };
+		D80F4FCE1BC419BD00EAA4EC /* Domain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Domain.cpp; sourceTree = "<group>"; };
+		D80F4FCF1BC419BD00EAA4EC /* Domain.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Domain.hpp; sourceTree = "<group>"; };
+		D80F4FD11BC419C600EAA4EC /* Storage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Storage.cpp; sourceTree = "<group>"; };
+		D80F4FD21BC419C600EAA4EC /* Storage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Storage.hpp; sourceTree = "<group>"; };
+		D80F4FD41BC41B9700EAA4EC /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		D80F4FD61BC41B9E00EAA4EC /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D80F4FD71BC41B9E00EAA4EC /* OpenGL.framework in Frameworks */,
+				D80F4FD51BC41B9700EAA4EC /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +62,8 @@
 		D80F4FB21BC4191B00EAA4EC = {
 			isa = PBXGroup;
 			children = (
+				D80F4FD61BC41B9E00EAA4EC /* OpenGL.framework */,
+				D80F4FD41BC41B9700EAA4EC /* GLUT.framework */,
 				D80F4FBD1BC4191B00EAA4EC /* ParticleMotion */,
 				D80F4FBC1BC4191B00EAA4EC /* Products */,
 			);
@@ -58,6 +81,16 @@
 			isa = PBXGroup;
 			children = (
 				D80F4FBE1BC4191B00EAA4EC /* main.cpp */,
+				D80F4FC51BC4195600EAA4EC /* Architect.cpp */,
+				D80F4FC61BC4195600EAA4EC /* Architect.hpp */,
+				D80F4FC81BC4196200EAA4EC /* Particle.cpp */,
+				D80F4FC91BC4196200EAA4EC /* Particle.hpp */,
+				D80F4FCB1BC4198200EAA4EC /* Visualization.cpp */,
+				D80F4FCC1BC4198200EAA4EC /* Visualization.hpp */,
+				D80F4FCE1BC419BD00EAA4EC /* Domain.cpp */,
+				D80F4FCF1BC419BD00EAA4EC /* Domain.hpp */,
+				D80F4FD11BC419C600EAA4EC /* Storage.cpp */,
+				D80F4FD21BC419C600EAA4EC /* Storage.hpp */,
 			);
 			path = ParticleMotion;
 			sourceTree = "<group>";
@@ -118,7 +151,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D80F4FCD1BC4198200EAA4EC /* Visualization.cpp in Sources */,
 				D80F4FBF1BC4191B00EAA4EC /* main.cpp in Sources */,
+				D80F4FCA1BC4196200EAA4EC /* Particle.cpp in Sources */,
+				D80F4FD31BC419C600EAA4EC /* Storage.cpp in Sources */,
+				D80F4FD01BC419BD00EAA4EC /* Domain.cpp in Sources */,
+				D80F4FC71BC4195600EAA4EC /* Architect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +243,20 @@
 		D80F4FC31BC4191B00EAA4EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/mysql/5.6.26/include/mysql,
+					/usr/local/Cellar/glfw3/3.1.1/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/mysql/5.6.26/lib,
+					/usr/local/Cellar/glfw3/3.1.1/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lmysqlclient",
+					"-lm",
+					"-lz",
+					"-lglfw3",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -212,6 +264,20 @@
 		D80F4FC41BC4191B00EAA4EC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/mysql/5.6.26/include/mysql,
+					/usr/local/Cellar/glfw3/3.1.1/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/mysql/5.6.26/lib,
+					/usr/local/Cellar/glfw3/3.1.1/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lmysqlclient",
+					"-lm",
+					"-lz",
+					"-lglfw3",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
