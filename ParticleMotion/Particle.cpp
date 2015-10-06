@@ -158,8 +158,8 @@ void Particle::ComputeParticleForce(vector<Particle*> part){
             _Fx += 0;
             _Fy += 0;
         }else {
-            _Fx += (_Gx*_Mass*((*p)->getMass())/pow(dist[0],2))*cos(dist[1]);
-            _Fy += (_Gy*_Mass*((*p)->getMass())/pow(dist[0],2))*sin(dist[1]);
+            _Fx += -(_Gx*_Mass*((*p)->getMass())/pow(dist[0],2))*cos(dist[1]);
+            _Fy += -(_Gy*_Mass*((*p)->getMass())/pow(dist[0],2))*sin(dist[1]);
         }
     }
 }
