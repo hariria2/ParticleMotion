@@ -110,6 +110,7 @@ double Particle::getPE(){
 }
 
 void Particle::Move(double dt){
+    string domainType = _Domain->getType();
     
     double xp = _X;
     double yp = _Y;
@@ -123,43 +124,82 @@ void Particle::Move(double dt){
     _X = _X + dt*_Vx;
     _Y = _Y + dt*_Vy;
     
-    Wall(xp,yp,vxp,vyp,dt);
+    if (domainType == "Wall"){
+        Wall(xp,yp,vxp,vyp,dt);
+    } else if (domainType == "Torus") {
+        _X = fmod(_X + _Domain->Boundary[0][1], _Domain->Boundary[0][1]);
+        _Y = fmod(_Y + _Domain->Boundary[1][1], _Domain->Boundary[1][1]);
+    }
     
-    
-    
-    //    if(_X <= 0){
-    //        _X = _Domain->Boundary[0][1] - _X;
-    //    }else if(_X > _Domain->Boundary[0][1]) {
-    //        _X = _X - _Domain->Boundary[0][1];
-    //    }
-    //
-    //    if(_Y <= 0){
-    //        _Y = _Domain->Boundary[1][1] - _Y;
-    //    }else if(_Y > _Domain->Boundary[1][1]) {
-    //        _Y = _Y - _Domain->Boundary[1][1];
-    //    }
 }
 double* Particle::Distance(Particle* p){
     double* r = new double[2];
     // order matters here.
     double xdiff = p->getX() - _X;
     double ydiff = p->getY() - _Y;
-    r[0] = sqrt(pow(xdiff,2) + pow(ydiff,2));
-    r[1] = atan2(ydiff, xdiff);
+    r[0] = sqrtf(powf(xdiff,2) + powf(ydiff,2));
+    r[1] = atan2f(ydiff, xdiff);
     return r;
 };
+double* Particle::Distance2(Particle* p){
+    double* r = new double[2];
+    // order matters here.
+    double xdiff = _Domain->Boundary[0][1] - abs(p->getX() - _X);
+    double ydiff = _Domain->Boundary[1][1] - abs(p->getY() - _Y);
+    r[0] = sqrtf(powf(xdiff,2) + powf(ydiff,2));
+    r[1] = atan2f(ydiff, xdiff);
+    return r;
+};
+
+double* Particle::Dist(double x1, double x2, double y1, double y2){
+    double* r = new double[2];
+    // order matters here.
+    double xdiff = x1-x2;
+    double ydiff = y1-y2;
+    r[0] = sqrtf(powf(xdiff,2) + powf(ydiff,2));
+    r[1] = atan2f(ydiff, xdiff);
+    return r;
+};
+
 void Particle::ComputeParticleForce(vector<Particle*> part){
     double* dist = new double[2];
+    double* d1 = new double[2];
+    double* d2 = new double[2];
+    double* d3 = new double[2];
+    double* d4 = new double[2];
+    double bx1 = _Domain->Boundary[0][0];
+    double bx2 = _Domain->Boundary[0][1];
+    double by1 = _Domain->Boundary[1][0];
+    double by2 = _Domain->Boundary[1][1];
+    
+    string domainType = _Domain->getType();
     
     for(auto p = part.cbegin(); p != part.cend(); ++p){
-        dist = Distance(*p);
+        dist = Dist((*p)->getX(),_X, (*p)->getY(),_Y);
         
-        if (dist[0] < 1e-10){
-            _Fx += 0;
-            _Fy += 0;
-        }else {
-            _Fx += -(_Gx*_Mass*((*p)->getMass())/pow(dist[0],2))*cos(dist[1]);
-            _Fy += -(_Gy*_Mass*((*p)->getMass())/pow(dist[0],2))*sin(dist[1]);
+        
+        if (domainType=="Wall"){
+            if (dist[0] < 1e-10){
+                _Fx += 0;
+                _Fy += 0;
+            }else {
+                _Fx += -(_Gx*_Mass*((*p)->getMass())/powf(dist[0],2))*cosf(dist[1]);
+                _Fy += -(_Gy*_Mass*((*p)->getMass())/powf(dist[0],2))*sinf(dist[1]);
+            }
+        } else if (domainType=="Torus"){
+            
+            d1 = Dist((*p)->getX()-bx1,_X-bx1,(*p)->getY()-by1, _Y-by1);
+            d2 = Dist((*p)->getX()-bx1,_X-bx2,(*p)->getY()-by1, _Y-by2);
+            d3 = Dist((*p)->getX()-bx1,bx1-_X,(*p)->getY()-by1, by1-_Y);
+            d4 = Dist(bx2-(*p)->getX(),_X-bx2,by2-(*p)->getY(), _Y-by2);
+            
+            if (d1[0] < 1e-10){
+                _Fx += 0;
+                _Fy += 0;
+            }else {
+                _Fx += -_Gx*_Mass*((*p)->getMass())*(cosf(d1[1])/powf(d1[0],2)+cosf(d2[1])/powf(d2[0],2)+cosf(d3[1])/powf(d3[0],2)+cosf(d4[1])/powf(d4[0],2));
+                _Fy += -_Gy*_Mass*((*p)->getMass())*(sinf(d1[1])/powf(d1[0],2)+sinf(d2[1])/powf(d2[0],2)+sinf(d3[1])/powf(d3[0],2)+sinf(d4[1])/powf(d4[0],2));
+            }
         }
     }
 }

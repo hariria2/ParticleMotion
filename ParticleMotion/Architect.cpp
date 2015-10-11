@@ -148,12 +148,13 @@ void Architect::Simulate(){
     _Visualization->Init();
     while (!glfwWindowShouldClose(_Visualization->getWindow())){
         
-        
-        cout << "time " << _Time << "!" << endl;
+        if (_Time - floor(_Time) < _TimeStep){
+            cout << "time " << _Time << "!" << endl;
+        }
         
         _Visualization->Render(_Particles);
         Update();
-        
+        usleep(static_cast<int>(_TimeStep*1000000));
     }
     
 }

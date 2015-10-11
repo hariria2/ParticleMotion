@@ -57,6 +57,8 @@ public:
     
     void Move(double dt);
     double* Distance(Particle* p);
+    double* Distance2(Particle* p);
+    double* Dist(double x1, double x2, double y1, double y2);
     void ComputeParticleForce(vector<Particle*> part);
     void ComputeWallForce();
     void ComputeKE();
