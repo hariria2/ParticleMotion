@@ -140,6 +140,12 @@ class SQLVisualization:
     def PlotLocation(self, part):
         plt.plot(part._X,part._Y,'.k')
         plt.show()
+    def PlotVelocity(self, part):
+        plt.plot(part._Vx,part._Vy,'.k')
+        plt.show()
+    def PlotForce(self, part):
+        plt.plot(part._Fx,part._Fy,'.k')
+        plt.show()
     def Render(self, fignum, t):
         #fig, ax = plt.subplots()
 
