@@ -139,24 +139,36 @@ class SQLVisualization:
 
     def PlotLocation(self, part):
         plt.plot(part._X,part._Y,'.k')
-        plt.show()
+        plt.xlabel('x')
+        plt.ylabel('y')
+
     def PlotVelocity(self, part):
         plt.plot(part._Vx,part._Vy,'.k')
-        plt.show()
+        plt.xlabel('v_x')
+        plt.ylabel('v_y')
     def PlotForce(self, part):
         plt.plot(part._Fx,part._Fy,'.k')
-        plt.show()
-    def Render(self, fignum, t):
-        #fig, ax = plt.subplots()
+        plt.xlabel('f_x')
+        plt.ylabel('f_y')
+    def PlotTimeX(self, part):
+        plt.plot(part._Time,part._X,'.k')
 
-        #patches = []
-        #rect = mpatches.Rectangle([0.025, 0.05], 0.05, 0.1, ec="none")
-        #patches.append(rect)
-        #p = PatchCollection(patches, cmap=plt.cm.hsv, alpha=0.3)
-        #ax.add_collection(p)
+    def PlotTimeY(self, part):
+        plt.plot(part._Time,part._Y,'.k')
 
-        plt.figure(fignum)
-        self.DrawParticle(self._Particles[0])
+    def PlotTimeVx(self, part):
+        plt.plot(part._Time,part._Vx,'.k')
+
+    def PlotTimeVy(self, part):
+        plt.plot(part._Time,part._Vy,'.k')
+
+    def PlotTimeFx(self, part):
+        plt.plot(part._Time,part._Fx,'.k')
+
+    def PlotTimeFy(self, part):
+        plt.plot(part._Time,part._Fy,'.k')
+
+    def Render(self, t):
         plt.show()
 
 
