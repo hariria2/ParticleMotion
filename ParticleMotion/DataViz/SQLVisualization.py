@@ -4,6 +4,7 @@ import matplotlib.patches as mpatches
 from matplotlib.collections import PatchCollection
 from Particle import Particle
 from Domain import Domain
+from math import sqrt
 
 class SQLVisualization:
 
@@ -21,6 +22,7 @@ class SQLVisualization:
         self._Domains = []
         self._DomainIDs = []
 
+
     def getParticle(self, ids):
         query1 = '';
         query2 = '';
@@ -36,7 +38,7 @@ class SQLVisualization:
 
             l = len(data1);
 
-            ids = range(0,l);
+            ids = range(1,l+1);
             self.ShowProgress = 1;
         else:
             l = len(ids);
@@ -66,7 +68,7 @@ class SQLVisualization:
 
         # data2 - index, id, time, x, y, vx, vy, fx, fy
 
-        for idx in range(0,l):
+        for idx in range(l):
             id = ids[idx]
             alldata = [x for x in data2 if x[1] == id]
             m = data1[idx][1]
@@ -79,6 +81,7 @@ class SQLVisualization:
             p.setVy([x[6] for x in alldata])
             p.setFx([x[7] for x in alldata])
             p.setFy([x[8] for x in alldata])
+            p.setDt()
 
             if not (id in self._ParticleIDs):
                 self._Particles.append(p)
@@ -141,7 +144,6 @@ class SQLVisualization:
         plt.plot(part._X,part._Y,'.k')
         plt.xlabel('x')
         plt.ylabel('y')
-
     def PlotVelocity(self, part):
         plt.plot(part._Vx,part._Vy,'.k')
         plt.xlabel('v_x')
@@ -152,26 +154,44 @@ class SQLVisualization:
         plt.ylabel('f_y')
     def PlotTimeX(self, part):
         plt.plot(part._Time,part._X,'.k')
-
     def PlotTimeY(self, part):
         plt.plot(part._Time,part._Y,'.k')
-
     def PlotTimeVx(self, part):
         plt.plot(part._Time,part._Vx,'.k')
-
     def PlotTimeVy(self, part):
         plt.plot(part._Time,part._Vy,'.k')
-
     def PlotTimeFx(self, part):
         plt.plot(part._Time,part._Fx,'.k')
-
     def PlotTimeFy(self, part):
         plt.plot(part._Time,part._Fy,'.k')
 
-    def Render(self, t):
+    def HistVx(self,t):
+        VV = [x._Vx for x in self._Particles]
+        dt = self._Particles[0]._dt
+        idx = int(t/dt)
+        data = [x[idx] for x in VV]
+        pn, bins, patches = plt.hist(data,len(self._Particles),normed=1,rwidth=0.8)
+        plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
+
+    def HistVy(self,t):
+        VV = [x._Vy for x in self._Particles]
+        dt = self._Particles[0]._dt
+        idx = int(t/dt)
+        data = [x[idx] for x in VV]
+        n, bins, patches = plt.hist(data,len(self._Particles),normed=1,rwidth=0.8)
+        plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
+
+    def HistKE(self,t):
+        VV = [(x._Mass,x._Vx,x._Vy) for x in self._Particles]
+        dt = self._Particles[0]._dt
+        idx = int(t/dt)
+        data = [0.5*x[0]*sqrt(x[1][idx]**2+x[2][idx]**2) for x in VV]
+        n, bins, patches = plt.hist(data,len(self._Particles),normed=1,rwidth=0.8)
+        plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
+
+
+    def Render(self):
         plt.show()
-
-
     def __del__(self):
         self._Cursor.close()
         self._Connection.close()

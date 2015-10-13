@@ -21,3 +21,5 @@ class Particle:
         self._Fx = fx
     def setFy(self, fy):
         self._Fy = fy
+    def setDt(self):
+        self._dt = self._Time[3]-self._Time[2]
