@@ -24,7 +24,9 @@ class Architect{
     
 public:
     
-    Architect(Domain* D, vector<Particle*> ps, double dt, double te, Visualization* vis);
+    Architect(Domain* D, vector<Particle*> ps, double dt, double te, Visualization* vis, Storage* db);
+    
+    int _StorageQ = 0;
     
     void setTime(double time);
     void setTimeStep(double dt);
@@ -38,7 +40,8 @@ public:
     double getEndTime();
     vector<Particle*> getParticles();
     Visualization* getVisualization();
-    
+
+    void Update(int storageq);
     void Update();
     void Simulate();
     void ComputeParticleForce(vector<Particle*>);
@@ -57,6 +60,7 @@ private:
     vector<vector<int>> _ParticleForceMatrixY;
     Storage* _Storage;
     Visualization* _Visualization;
+    
     
 };
 

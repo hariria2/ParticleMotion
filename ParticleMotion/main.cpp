@@ -43,12 +43,12 @@ void example1(){
     int xdim = 640;
     int ydim = 480;
     int MyB[2][2]   = {{0, xdim},{0, ydim}};
-    string type = "Wall";
+    string type = "Torus";
     Domain D(0, MyB, type);
     
     //Particle(id, Domain, mass,x,y,vx,vy, fx,fy)
     
-    int numPart = 10;
+    int numPart = 100;
     vector<Particle*> parts;
     double x;
     double y;
@@ -88,12 +88,12 @@ void example1(){
     
     
     string ver;
-    //cout << "Please enter version number: ";
-    //cin >> ver;
+    cout << "Please enter version number: ";
+    cin >> ver;
     Visualization vis(xdim,ydim);
-    //Storage storage("localhost", "root", "", "anchorDB", ver);
-    Architect archie(&D, parts, 0.1, 100, &vis);
-    
+    Storage storage("localhost", "root", "", "anchorDB", ver);
+    Architect archie(&D, parts, 0.05, 100, &vis, &storage);
+    archie._StorageQ = 1;
     cout << "X before simulation: " << parts.back()->getX() << endl;
     cout << "Y before simulation: " << parts.back()->getY() << endl;
     archie.Simulate();

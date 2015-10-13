@@ -1,7 +1,6 @@
 import mysql.connector
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.collections import PatchCollection
+from matplotlib import rc
 from Particle import Particle
 from Domain import Domain
 from math import sqrt
@@ -170,25 +169,38 @@ class SQLVisualization:
         dt = self._Particles[0]._dt
         idx = int(t/dt)
         data = [x[idx] for x in VV]
-        pn, bins, patches = plt.hist(data,len(self._Particles),normed=1,rwidth=0.8)
+        pn, bins, patches = plt.hist(data,int(len(self._Particles)/2.),normed=1,rwidth=0.8)
         plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
+        plt.ylabel('Vx')
 
     def HistVy(self,t):
         VV = [x._Vy for x in self._Particles]
         dt = self._Particles[0]._dt
         idx = int(t/dt)
         data = [x[idx] for x in VV]
-        n, bins, patches = plt.hist(data,len(self._Particles),normed=1,rwidth=0.8)
+        n, bins, patches = plt.hist(data,int(len(self._Particles)/2.),normed=1,rwidth=0.8)
         plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
+        plt.ylabel('Vy')
+
+    def HistTotalV(self,t):
+        #plt.rc('text', usetex=True)
+        #plt.rc('font', family='serif')
+        VV = [(x._Mass,x._Vx,x._Vy) for x in self._Particles]
+        dt = self._Particles[0]._dt
+        idx = int(t/dt)
+        data = [x[1][idx]+x[2][idx] for x in VV]
+        n, bins, patches = plt.hist(data,int(len(self._Particles)/2.),normed=1,rwidth=0.8)
+        plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
+        plt.ylabel('Vx+Vy')
 
     def HistKE(self,t):
         VV = [(x._Mass,x._Vx,x._Vy) for x in self._Particles]
         dt = self._Particles[0]._dt
         idx = int(t/dt)
         data = [0.5*x[0]*sqrt(x[1][idx]**2+x[2][idx]**2) for x in VV]
-        n, bins, patches = plt.hist(data,len(self._Particles),normed=1,rwidth=0.8)
+        n, bins, patches = plt.hist(data,int(len(self._Particles)/2.),normed=1,rwidth=0.8)
         plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
-
+        plt.ylabel('KE')
 
     def Render(self):
         plt.show()

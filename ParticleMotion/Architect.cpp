@@ -12,14 +12,14 @@
 
 using namespace std;
 
-Architect::Architect(Domain* D, vector<Particle*> ps, double dt, double te, Visualization* vis):_Domain(*D)
+Architect::Architect(Domain* D, vector<Particle*> ps, double dt, double te, Visualization* vis, Storage* storage):_Domain(*D)
 {
     setTime(0);
     setTimeStep(dt);
     setEndTime(te);
     setParticles(ps);
     setVisualization(vis);
-    //setStorage(storage);
+    setStorage(storage);
     
 };
 
@@ -59,60 +59,59 @@ Visualization* Architect::getVisualization(){
 }
 
 
-//void Architect::Update(){
-//    string SQLStatement1;
-//    string SQLStatement2;
-//    double TotalKE;
-//    double TotalPE;
-//    double TotalVx;
-//    double TotalVy;
-//    double TotalFx;
-//    double TotalFy;
-//    for(auto p = _Particles.cbegin(); p != _Particles.cend(); ++p){
-//
-//        SQLStatement1 = SQLStatement1 + "(NULL, " +
-//        to_string((*p)->getID()) + ", " +
-//        to_string((*p)->getTime()) + ", " +
-//        to_string((*p)->getX())  + ", " +
-//        to_string((*p)->getY())  + ", " +
-//        to_string((*p)->getVx()) + ", " +
-//        to_string((*p)->getVy()) + ", " +
-//        to_string((*p)->getFx()) + ", " +
-//        to_string((*p)->getFy()) + ", " +
-//        to_string((*p)->getKE()) + ", " +
-//        to_string((*p)->getPE()) +
-//        "),";
-//
-//        (*p)->ComputeParticleForce(_Particles);
-//        (*p)->ComputeKE();
-//        (*p)->ComputePE();
-//        TotalKE += (*p)->getKE();
-//        TotalPE += (*p)->getPE();
-//        TotalVx += (*p)->getVx();
-//        TotalVy += (*p)->getVy();
-//        TotalFx += (*p)->getFx();
-//        TotalFy += (*p)->getFy();
-//
-//        //(*p)->ComputeWallForce();
-//        (*p)->Move(_TimeStep);
-//        (*p)->setTime(_Time);
-//    }
-//    SQLStatement1.pop_back();
-//    SQLStatement2 = "(Null, " +
-//    to_string(_Time) + ", " +
-//    to_string(TotalKE) + ", " +
-//    to_string(TotalPE) + ", " +
-//    to_string(TotalVx) + ", " +
-//    to_string(TotalVy) + ", " +
-//    to_string(TotalFx) + ", " +
-//    to_string(TotalFy) + ")";
-//
-//
-//    _Storage -> InsertValue("ParticleData",SQLStatement1, true);
-//    _Storage -> InsertValue("SystemData"  ,SQLStatement2, true);
-//    _Time += _TimeStep;
-//
-//}
+void Architect::Update(int storageq){
+    string SQLStatement1;
+    string SQLStatement2;
+    double TotalKE;
+    double TotalPE;
+    double TotalVx;
+    double TotalVy;
+    double TotalFx;
+    double TotalFy;
+    for(auto p = _Particles.cbegin(); p != _Particles.cend(); ++p){
+
+        SQLStatement1 = SQLStatement1 + "(NULL, " +
+        to_string((*p)->getID()) + ", " +
+        to_string((*p)->getTime()) + ", " +
+        to_string((*p)->getX())  + ", " +
+        to_string((*p)->getY())  + ", " +
+        to_string((*p)->getVx()) + ", " +
+        to_string((*p)->getVy()) + ", " +
+        to_string((*p)->getFx()) + ", " +
+        to_string((*p)->getFy()) + ", " +
+        to_string((*p)->getKE()) + ", " +
+        to_string((*p)->getPE()) +
+        "),";
+
+        (*p)->ComputeParticleForce(_Particles);
+        (*p)->ComputeKE();
+        (*p)->ComputePE();
+        TotalKE += (*p)->getKE();
+        TotalPE += (*p)->getPE();
+        TotalVx += (*p)->getVx();
+        TotalVy += (*p)->getVy();
+        TotalFx += (*p)->getFx();
+        TotalFy += (*p)->getFy();
+
+        //(*p)->ComputeWallForce();
+        (*p)->Move(_TimeStep);
+        (*p)->setTime(_Time);
+    }
+    SQLStatement1.pop_back();
+    SQLStatement2 = "(Null, " +
+    to_string(_Time) + ", " +
+    to_string(TotalKE) + ", " +
+    to_string(TotalPE) + ", " +
+    to_string(TotalVx) + ", " +
+    to_string(TotalVy) + ", " +
+    to_string(TotalFx) + ", " +
+    to_string(TotalFy) + ")";
+
+    _Storage -> InsertValue("ParticleData",SQLStatement1, true);
+    _Storage -> InsertValue("SystemData"  ,SQLStatement2, true);
+    _Time += _TimeStep;
+
+}
 
 void Architect::Update(){
     
@@ -144,19 +143,34 @@ void Architect::Update(){
 }
 
 void Architect::Simulate(){
-    //PrepDB();
-    _Visualization->Init();
-    while (!glfwWindowShouldClose(_Visualization->getWindow())){
-        
-        if (_Time - floor(_Time) < _TimeStep){
-            cout << "time " << _Time << "!" << endl;
-        }
-        
-        _Visualization->Render(_Particles);
-        Update();
-        usleep(static_cast<int>(_TimeStep*1000000));
-    }
     
+    if (_StorageQ){
+    
+        PrepDB();
+        _Visualization->Init();
+        while (!glfwWindowShouldClose(_Visualization->getWindow())){
+        
+            if (_Time - floor(_Time) < _TimeStep){
+                cout << "time " << _Time << "!" << endl;
+            }
+        
+            _Visualization->Render(_Particles);
+            Update(_StorageQ);
+            usleep(static_cast<int>(_TimeStep*1000000));
+        }
+    } else {
+        _Visualization->Init();
+        while (!glfwWindowShouldClose(_Visualization->getWindow())){
+            
+            if (_Time - floor(_Time) < _TimeStep){
+                cout << "time " << _Time << "!" << endl;
+            }
+            
+            _Visualization->Render(_Particles);
+            Update();
+            usleep(static_cast<int>(_TimeStep*1000000));
+        }
+    }
 }
 
 void Architect::PrepDB(){
