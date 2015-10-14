@@ -3,20 +3,39 @@ import matplotlib.pyplot as plt
 
 vis = SQLVisualization('root','','localhost','partsim_v1_10_13_2015')
 
+trange = [40,48]
+toShow = [0.1,0.5,1,2,4,7]
+snapshots = [x + trange[0] for x in toShow]
 
-vis.getParticle('All')
+print snapshots
+vis.getParticle('All',trange)
 vis.getDomain('All')
 
+
+
+n = 1;
 plt.figure(1)
-plt.subplot(2,1,1)
-vis.HistVx(0.05)
-plt.subplot(2,1,2)
-vis.HistVy(0.05)
+for t in toShow:
+    plt.subplot(3,2,n)
+    n = n+1
+    vis.HistKE(t,True)
 
+#vis.Render()
+
+# no variability
+vis2 = SQLVisualization('root','','localhost','partsim_v2_10_13_2015')
+
+
+vis2.getParticle('All',trange)
+vis2.getDomain('All')
+
+
+
+n = 1;
 plt.figure(2)
-plt.subplot(2,1,1)
-vis.HistTotalV(0.05)
-plt.subplot(2,1,2)
-vis.HistKE(0.05)
+for t in toShow:
+    plt.subplot(3,2,n)
+    n = n+1
+    vis2.HistKE(t,True)
 
-vis.Render()
+vis2.Render()

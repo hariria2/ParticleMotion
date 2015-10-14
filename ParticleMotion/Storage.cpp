@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Storage::Storage(const char *server, const char *user, const char *password, const char *database, string version){
+Storage::Storage(const char *server, const char *user, const char *password, const char *database, string version, int storeq){
     
     //===========>>>Figure out the time stamp<<<======================//
     time_t t = time(0);   // get time now
@@ -36,15 +36,20 @@ Storage::Storage(const char *server, const char *user, const char *password, con
     string dbname;
     dbname = "partsim_v" + version + "_" + timeStamp;
     
+    if (storeq){
+        Init(dbname);
+    }
+    
+    
+}
+
+void Storage::Init(string dbname){
     CreateDB(dbname);
     CreateTable("Domain");
     CreateTable("Particles");
     CreateTable("ParticleData");
     CreateTable("SystemData");
-    
-    
 }
-
 void Storage::CreateDB(string db){
     string purgedb="DROP DATABASE IF EXISTS "+db+";";
     string mydb="CREATE DATABASE "+db+";";

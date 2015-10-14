@@ -20,14 +20,14 @@ using namespace std;
 
 class Storage{
 public:
-    Storage(const char *server, const char *user, const char *password, const char *database, string version);
+    Storage(const char *server, const char *user, const char *password, const char *database, string version, int storeq);
     
     virtual ~Storage();
     
     void CreateDB(string db);
     void CreateTable(string table);
     void InsertValue(string table, string vals, bool paren=false);
-    
+    void Init(string dbname);
 private:
     string timeStamp;
     MYSQL *conn, mysql;

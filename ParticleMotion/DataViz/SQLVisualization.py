@@ -4,6 +4,7 @@ from matplotlib import rc
 from Particle import Particle
 from Domain import Domain
 from math import sqrt
+import numpy as np
 
 class SQLVisualization:
 
@@ -22,12 +23,16 @@ class SQLVisualization:
         self._DomainIDs = []
 
 
-    def getParticle(self, ids):
+    def getParticle(self, ids, t):
         query1 = '';
         query2 = '';
         if ids == 'All':
             sqlquery1 = 'SELECT * FROM Particles';
-            sqlquery2 = 'SELECT * FROM ParticleData';
+            if t == 'All':
+                sqlquery2 = 'SELECT * FROM ParticleData';
+            else:
+                self._T0 = t[0]
+                sqlquery2 = 'SELECT * From ParticleData Where Time > %d and Time < %d' %(t[0],t[1])
 
             self._Cursor.execute(sqlquery1);
             data1 = self._Cursor.fetchall();
@@ -39,7 +44,7 @@ class SQLVisualization:
 
             ids = range(1,l+1);
             self.ShowProgress = 1;
-        else:
+        else: # Make sure you add time picking to this case
             l = len(ids);
 
             for ii in range(0,l):
@@ -172,6 +177,7 @@ class SQLVisualization:
         pn, bins, patches = plt.hist(data,int(len(self._Particles)/2.),normed=1,rwidth=0.8)
         plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
         plt.ylabel('Vx')
+        plt.title('time = %d'%t)
 
     def HistVy(self,t):
         VV = [x._Vy for x in self._Particles]
@@ -181,6 +187,7 @@ class SQLVisualization:
         n, bins, patches = plt.hist(data,int(len(self._Particles)/2.),normed=1,rwidth=0.8)
         plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
         plt.ylabel('Vy')
+        plt.title('time = %d'%t)
 
     def HistTotalV(self,t):
         #plt.rc('text', usetex=True)
@@ -192,15 +199,20 @@ class SQLVisualization:
         n, bins, patches = plt.hist(data,int(len(self._Particles)/2.),normed=1,rwidth=0.8)
         plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
         plt.ylabel('Vx+Vy')
+        plt.title('time = %d'%t)
 
-    def HistKE(self,t):
+    def HistKE(self,t, massq):
         VV = [(x._Mass,x._Vx,x._Vy) for x in self._Particles]
         dt = self._Particles[0]._dt
         idx = int(t/dt)
-        data = [0.5*x[0]*sqrt(x[1][idx]**2+x[2][idx]**2) for x in VV]
+        if massq:
+            data = [0.5*x[0]*sqrt(x[1][idx]**2+x[2][idx]**2) for x in VV]
+        else:
+            data = [sqrt(x[1][idx]**2+x[2][idx]**2) for x in VV]
         n, bins, patches = plt.hist(data,int(len(self._Particles)/2.),normed=1,rwidth=0.8)
-        plt.setp(patches, 'facecolor', 'r', 'alpha', 0.3)
+        plt.setp(patches, 'facecolor', [0.8,0.5,0.5], 'alpha', 0.7)
         plt.ylabel('KE')
+        plt.title('time = %2.2f'%(t+self._T0))
 
     def Render(self):
         plt.show()

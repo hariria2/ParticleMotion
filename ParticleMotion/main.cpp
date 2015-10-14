@@ -43,7 +43,7 @@ void example1(){
     int xdim = 640;
     int ydim = 480;
     int MyB[2][2]   = {{0, xdim},{0, ydim}};
-    string type = "Torus";
+    string type = "Wall";
     Domain D(0, MyB, type);
     
     //Particle(id, Domain, mass,x,y,vx,vy, fx,fy)
@@ -65,18 +65,22 @@ void example1(){
         uniform_real_distribution<double> Disty(150,250);
         double yr  = Disty(generator);
         
+        
+        uniform_real_distribution<double> Mass(5,20);
+        double mr  = Mass(generator);
+        
         if (ii%2 == 0){
             x = xr;
             y = yr;
-            vx = 0;
+            vx = 10;
             vy = 0;
-            m = 20;
+            m = mr;
         }else{
             x = xr;
             y = yr;
-            vx = 0;
+            vx = 10;
             vy = 0;
-            m = 20;
+            m = mr;
         }
         Particle *p = new Particle(ii+1, &D, m, x, y, vx, 0, 0., 0.);
         p->setGx(0.1);
@@ -88,12 +92,18 @@ void example1(){
     
     
     string ver;
-    cout << "Please enter version number: ";
-    cin >> ver;
+    int storeq = 1;
+    if (storeq){
+        cout << "Please enter version number: ";
+        cin >> ver;
+    } else {
+        ver = 1;
+    }
+    
     Visualization vis(xdim,ydim);
-    Storage storage("localhost", "root", "", "anchorDB", ver);
+    Storage storage("localhost", "root", "", "anchorDB", ver, storeq);
     Architect archie(&D, parts, 0.05, 100, &vis, &storage);
-    archie._StorageQ = 1;
+    archie._StorageQ = storeq;
     cout << "X before simulation: " << parts.back()->getX() << endl;
     cout << "Y before simulation: " << parts.back()->getY() << endl;
     archie.Simulate();
