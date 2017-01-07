@@ -24,16 +24,11 @@ int main(int argc, const char * argv[]) {
     
     //example1();
     
-    timeval a;
-    timeval b;
     
-    gettimeofday(&a, 0);
 
     example1();
     
-    gettimeofday(&b, 0);
-    cout << "difference: " << (b.tv_sec - a.tv_sec) << endl;
-
+    
     return 0;
 }
 
@@ -92,7 +87,7 @@ void example1(){
     
     
     string ver;
-    int storeq = 1;
+    int storeq = 0;
     if (storeq){
         cout << "Please enter version number: ";
         cin >> ver;
@@ -106,7 +101,16 @@ void example1(){
     archie._StorageQ = storeq;
     cout << "X before simulation: " << parts.back()->getX() << endl;
     cout << "Y before simulation: " << parts.back()->getY() << endl;
+    
+    timeval a;
+    timeval b;
+    
+    gettimeofday(&a, 0);
     archie.Simulate();
+    gettimeofday(&b, 0);
+    cout << "difference: " << (b.tv_sec - a.tv_sec) << endl;
+
+    
     
     cout << "X after simulation: " << parts.back()->getX() << endl;
     cout << "Y after simulation: " << parts.back()->getY() << endl;

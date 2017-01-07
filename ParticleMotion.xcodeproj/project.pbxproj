@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		D80F4FBF1BC4191B00EAA4EC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FBE1BC4191B00EAA4EC /* main.cpp */; };
-		D80F4FC71BC4195600EAA4EC /* Architect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FC51BC4195600EAA4EC /* Architect.cpp */; settings = {ASSET_TAGS = (); }; };
-		D80F4FCA1BC4196200EAA4EC /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FC81BC4196200EAA4EC /* Particle.cpp */; settings = {ASSET_TAGS = (); }; };
-		D80F4FCD1BC4198200EAA4EC /* Visualization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FCB1BC4198200EAA4EC /* Visualization.cpp */; settings = {ASSET_TAGS = (); }; };
-		D80F4FD01BC419BD00EAA4EC /* Domain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FCE1BC419BD00EAA4EC /* Domain.cpp */; settings = {ASSET_TAGS = (); }; };
-		D80F4FD31BC419C600EAA4EC /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FD11BC419C600EAA4EC /* Storage.cpp */; settings = {ASSET_TAGS = (); }; };
+		D80F4FC71BC4195600EAA4EC /* Architect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FC51BC4195600EAA4EC /* Architect.cpp */; };
+		D80F4FCA1BC4196200EAA4EC /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FC81BC4196200EAA4EC /* Particle.cpp */; };
+		D80F4FCD1BC4198200EAA4EC /* Visualization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FCB1BC4198200EAA4EC /* Visualization.cpp */; };
+		D80F4FD01BC419BD00EAA4EC /* Domain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FCE1BC419BD00EAA4EC /* Domain.cpp */; };
+		D80F4FD31BC419C600EAA4EC /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80F4FD11BC419C600EAA4EC /* Storage.cpp */; };
 		D80F4FD51BC41B9700EAA4EC /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D80F4FD41BC41B9700EAA4EC /* GLUT.framework */; };
 		D80F4FD71BC41B9E00EAA4EC /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D80F4FD61BC41B9E00EAA4EC /* OpenGL.framework */; };
 /* End PBXBuildFile section */
@@ -244,12 +244,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-					/usr/local/Cellar/mysql/5.6.26/include/mysql,
-					/usr/local/Cellar/glfw3/3.1.1/include,
+					/usr/local/Cellar/mysql/5.7.13/include/mysql,
+					/usr/local/Cellar/glfw3/3.1.2/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
-					/usr/local/Cellar/mysql/5.6.26/lib,
-					/usr/local/Cellar/glfw3/3.1.1/lib,
+					/usr/local/Cellar/mysql/5.7.13/lib,
+					/usr/local/Cellar/glfw3/3.1.2/lib,
 				);
 				OTHER_LDFLAGS = (
 					"-lmysqlclient",
@@ -265,12 +265,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-					/usr/local/Cellar/mysql/5.6.26/include/mysql,
-					/usr/local/Cellar/glfw3/3.1.1/include,
+					/usr/local/Cellar/mysql/5.7.13/include/mysql,
+					/usr/local/Cellar/glfw3/3.1.2/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
-					/usr/local/Cellar/mysql/5.6.26/lib,
-					/usr/local/Cellar/glfw3/3.1.1/lib,
+					/usr/local/Cellar/mysql/5.7.13/lib,
+					/usr/local/Cellar/glfw3/3.1.2/lib,
 				);
 				OTHER_LDFLAGS = (
 					"-lmysqlclient",
@@ -301,6 +301,7 @@
 				D80F4FC41BC4191B00EAA4EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
